@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build SecureExamMonitor",
+      "type": "shell",
+      "command": "cl.exe",
+      "args": [
+        "/EHsc",
+        "/W4",
+        "/std:c++17",
+        "main.cpp",
+        "ProcessMonitor.cpp",
+        "/Fe:SecureExamMonitor.exe",
+        "/link",
+        "advapi32.lib",
+        "psapi.lib"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$msCompile"]
+    }
+  ]
+}

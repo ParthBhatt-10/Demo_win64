@@ -1,3 +1,11 @@
+for run 
+$env:PATH = "C:\mingw64\bin;" + $env:PATH
+>> 
+>> .\SecureExamMonitor.exe
+
+________________
+properly working but not stop 
+__________________
 #include <iostream>
 #include <windows.h>
 #include <atomic>

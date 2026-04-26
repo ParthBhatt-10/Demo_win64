@@ -4,8 +4,8 @@
 #include <windows.h>      // ← SECURITY_MAX_SID_SIZE lives here
 #include <sddl.h>         // ← WELL_KNOWN_SID_TYPE, CreateWellKnownSid
 #include <Psapi.h>
-#pragma comment(lib, "Psapi.lib")
-#pragma comment(lib, "advapi32.lib")  // ← CreateWellKnownSid, EqualSid
+//#pragma comment(lib, "Psapi.lib")
+//#pragma comment(lib, "advapi32.lib")  // ← CreateWellKnownSid, EqualSid
 
 std::vector<ProcessAction> ProcessMonitor::ScanAndEnforce(
     const std::vector<std::wstring>& blacklist,

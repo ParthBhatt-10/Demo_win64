@@ -5,31 +5,50 @@
 
 constexpr DWORD MONITOR_INTERVAL_MS = 3000;
 
-// ── SYSTEM GUARD — NEVER touch these regardless of any mode ──────────
-// Killing any of these will crash or destabilize Windows
+// ── SYSTEM GUARD — NEVER touch these ─────────────────────────────────
 const std::vector<std::wstring> SYSTEM_PROCESSES = {
-    L"system",               // Windows kernel (PID 4)
-    L"system idle process",  // CPU idle (PID 0)
-    L"smss.exe",             // Session Manager
-    L"csrss.exe",            // Client/Server Runtime (critical)
-    L"wininit.exe",          // Windows Initialization
-    L"winlogon.exe",         // Windows Logon
-    L"lsass.exe",            // Local Security Authority (critical)
-    L"lsm.exe",              // Local Session Manager
-    L"services.exe",         // Service Control Manager
-    L"svchost.exe",          // Generic service host (many instances)
-    L"dwm.exe",              // Desktop Window Manager
-    L"taskhost.exe",         // Task Host
-    L"taskhostw.exe",        // Task Host (Win10+)
-    L"sihost.exe",           // Shell Infrastructure Host
-    L"fontdrvhost.exe",      // Font Driver Host
-    L"spoolsv.exe",          // Print Spooler
-    L"SearchIndexer.exe",    // Windows Search
-    L"RuntimeBroker.exe",    // Runtime Broker
-    L"SecurityHealthService.exe", // Windows Security
-    L"MsMpEng.exe",          // Windows Defender
-    L"Registry",             // Registry process (Win10+)
-    L"SecureExamMonitor.exe" // Our own monitor
+    L"system",
+    L"system idle process",
+    L"smss.exe",
+    L"csrss.exe",
+    L"wininit.exe",
+    L"winlogon.exe",
+    L"lsass.exe",
+    L"lsm.exe",
+    L"services.exe",
+    L"svchost.exe",
+    L"dwm.exe",
+    L"taskhost.exe",
+    L"taskhostw.exe",
+    L"sihost.exe",
+    L"fontdrvhost.exe",
+    L"spoolsv.exe",
+    L"SearchIndexer.exe",
+    L"RuntimeBroker.exe",
+    L"SecurityHealthService.exe",
+    L"MsMpEng.exe",
+    L"Registry",
+    L"SecureExamMonitor.exe",
+
+    // ── Additional system processes needed for stability ────────────
+    L"conhost.exe",          // Console host — needed for this terminal
+    L"cmd.exe",              // Command prompt
+    L"powershell.exe",       // PowerShell — needed during testing
+    L"taskmgr.exe",          // Task Manager
+    L"explorer.exe",         // Windows shell — desktop/taskbar
+    L"ctfmon.exe",           // Text input service
+    L"dllhost.exe",          // COM surrogate
+    L"WmiPrvSE.exe",         // WMI provider
+    L"audiodg.exe",          // Audio service
+    L"NisSrv.exe",           // Windows Defender network
+    L"SgrmBroker.exe",       // System Guard Runtime
+    L"TextInputHost.exe",    // Touch keyboard
+    L"StartMenuExperienceHost.exe",  // Start menu
+    L"SearchHost.exe",       // Search
+    L"ShellExperienceHost.exe",      // Shell UI
+    L"ApplicationFrameHost.exe",     // UWP apps frame
+    L"UserOOBEBroker.exe",   // OOBE broker
+    L"backgroundTaskHost.exe" // Background tasks
 };
 
 // ── BLACKLIST — Remote desktop apps, always kill ──────────────────────
@@ -47,15 +66,14 @@ const std::vector<std::wstring> BLACKLISTED_APPS = {
     L"msrdcw.exe"
 };
 
-// ── WHITELIST — Trusted exam apps, always allow ───────────────────────
+// ── WHITELIST — ONLY these user apps are allowed to run ──────────────
+// chrome.exe is intentionally removed — it will be terminated
 const std::vector<std::wstring> WHITELISTED_APPS = {
-    L"explorer.exe",
-    L"chrome.exe",
-    L"msedge.exe",
-    L"firefox.exe",
-    L"notepad.exe",
-    L"Code.exe",
-    L"winword.exe",
-    L"excel.exe",
-    L"devenv.exe",
+    L"msedge.exe",           // Edge browser
+    L"firefox.exe",          // Firefox
+    L"notepad.exe",          // Notepad
+    L"Code.exe",             // VS Code
+    L"winword.exe",          // MS Word
+    L"excel.exe",            // MS Excel
+    L"devenv.exe",           // Visual Studio
 };
